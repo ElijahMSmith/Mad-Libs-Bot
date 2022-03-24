@@ -1,0 +1,23 @@
+{
+    "name": "madlibbot",
+    "version": "1.0.0",
+    "description": "Asks for user input and completes a madlib!",
+    "main": "./src/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "nodemon src/index.js",
+        "deploy": "node src/deploy-commands.js"
+    },
+    "author": "Eli",
+    "license": "ISC",
+    "devDependencies": {
+        "@discordjs/builders": "^0.12.0",
+        "@discordjs/rest": "^0.3.0",
+        "discord-api-types": "^0.29.0",
+        "nodemon": "^2.0.15"
+    },
+    "dependencies": {
+        "discord.js": "^13.6.0",
+        "dotenv": "^16.0.0"
+    }
+}
