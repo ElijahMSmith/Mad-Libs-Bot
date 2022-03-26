@@ -1,5 +1,5 @@
 import { Client, Intents, Message } from "discord.js";
-import MadLib from "./madlib-templates.js";
+import MadLibs from "./madlib-templates.js";
 import dotenv from "dotenv";
 
 // Check discord.js documentation for Client, IntentsResolvable
@@ -27,16 +27,19 @@ client.on("interactionCreate", (interaction) => {
     else if (commandName === "madlib") {
         const title = options.getString("title");
 
-        const text = MadLib.text;
-        const requirements = MadLib.requirements;
+        const number = Math.floor(Math.random() * MadLibs.length);
+        const madlib = MadLibs[number];
+        const text = madlib.text;
+        const requirements = madlib.requirements;
 
         let returnMessage =
-            "Let's make a madlib! Reply to this message in the following format:";
+            "Let's make a madlib! Reply to this message in the following format:\n";
         for (let req of requirements) returnMessage += "\n" + req;
 
         awaitingReply.push({
             userID: interaction.user.id,
             title,
+            number,
         });
 
         interaction.reply(returnMessage);
@@ -57,8 +60,10 @@ client.on("messageCreate", (msg) => {
 
             // Do stuff
             const replyContent = text.split("\n");
-            let textTemplate = MadLib.text;
-            if (replyContent.length !== MadLib.requirements.length) {
+            let textTemplate = MadLibs[obj.number].text;
+            if (
+                replyContent.length !== MadLibs[obj.number].requirements.length
+            ) {
                 msg.reply(
                     "Could not complete madlib - the number of inputs was not correct!"
                 );
